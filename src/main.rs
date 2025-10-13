@@ -5,11 +5,12 @@ use std::{
     path::PathBuf,
 };
 
-mod dbgvm;
 mod vm;
 
 use clap::Parser;
 use log::*;
+
+use crate::vm::Vm;
 
 #[derive(Parser)]
 struct Args {
@@ -26,13 +27,8 @@ fn main() -> anyhow::Result<()> {
 
     let src = fs::read_to_string(args.file)?;
 
-    if args.debug {
-        let mut vm = dbgvm::Vm::new(&src);
-        vm.run()?;
-    } else {
-        let mut vm = vm::Vm::new(&src);
-        vm.run()?;
-    }
+    let mut vm = Vm::new(&src, args.debug);
+    vm.run()?;
 
     Ok(())
 }
@@ -94,4 +90,24 @@ impl Display for Tape<u8> {
         f.write_str("\n")?;
         f.write_str(("   ".repeat(self.head) + "^").as_str())
     }
+}
+
+pub fn display_stack(stack: &[u8]) -> String {
+    let mut result = String::with_capacity(stack.len() * 3);
+
+    for i in stack {
+        if !(*i).is_ascii_control() {
+            result.push(*i as char);
+            result.push_str(" |");
+        } else {
+            let formatted = format!("{:X}", *i);
+            if formatted.len() == 1 {
+                result.push('0');
+            }
+            result.push_str(&formatted);
+            result.push('|');
+        }
+    }
+
+    result
 }

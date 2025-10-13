@@ -1,0 +1,14 @@
+[package]
+name = "snli"
+version = "0.1.0"
+edition = "2024"
+description = "An interpreter for the Syntax Null Language Esolang"
+documentation = "https://esolangs.org/wiki/Syntax_Null_Language"
+authors = ["DDAN"]
+
+[dependencies]
+anyhow = "1.0.100"
+clang_log = "2.1.2"
+clap = { version = "4.5.49", features = ["derive"] }
+crossterm = "0.29.0"
+log = "0.4.28"

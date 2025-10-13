@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2024"
 description = "An interpreter for the Syntax Null Language Esolang"
 documentation = "https://esolangs.org/wiki/Syntax_Null_Language"
+repository = "https://github.com/DDAN-17/snl"
+license = "MIT"
 authors = ["DDAN"]
 
 [dependencies]
